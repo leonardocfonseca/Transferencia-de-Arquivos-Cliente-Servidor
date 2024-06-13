@@ -1,9 +1,9 @@
-from tkinter import filedialog
+from tkinter import filedialog, Tk
 from socket import *
 from time import sleep
 import os
 
-
+# Função que vai exibir as opções para o Cliente
 def exibirMenu():
     print("[1] - Enviar arquivo\n[2] - Baixar arquivo do servidor\n[0] - Encerrar o programa\n")
     opção = input("Selecione a opção desejada: ")
@@ -11,12 +11,26 @@ def exibirMenu():
         opção = input("Opção invalida!\nSelecione apenas as opções disponíveis: ")
     return opção
 
-
+# Função que vai abrir uma janela de seleção de arquivos
+# Retorna o diretório do arquivo selecionado
 def selecionarArquivo():
+    janela = Tk()
+
+    janela.withdraw()
+    # Exibe a janela de seleção de arquivo
+    janela.lift()
+    janela.attributes('-topmost', True)
+    # window.grab_set()
+
+    # Permite que outras janelas passem na frente
+    # window.after_idle(window.attributes, '-topmost', False)
+    
     diretorio = filedialog.askopenfilename(title="SELECIONE O ARQUIVO")
     return diretorio
 
-
+# Função que vai enviar o arquivo para o servidor
+# Primeiramente ela envia o nome do arquivo para o servidor
+# E depois ela vai enviando o conteúdo do arquivo
 def enviarArquivo():
     dirArquivo = selecionarArquivo()
     
@@ -29,10 +43,11 @@ def enviarArquivo():
         sockobj.send(tamanho.encode())
         sockobj.send(buffer)
 
-    print('O Arquivo [' + nome_arquivo + '] foi enviado com sucesso')
+    print('O Arquivo "' + nome_arquivo + '" foi enviado com sucesso')
 
 
-# Função que exibe arquivos presente no servidor
+# Função que recebe como parametro o vetor contendo os nomes dos arquivos que estão no servidor
+# E imprime o nome do arquivo em cada linha
 def exibirArquivos(lista_arquivo):
     print('\n<-- Arquivos presente no servidor -->\n')
     for i in lista_arquivo:
@@ -40,6 +55,8 @@ def exibirArquivos(lista_arquivo):
     print('\n')
 
 
+# Função que vai cuidar do input do Cliente caso ele digite o nome do arquivo errado
+# Ela recebe como parâmetro um vetor contendo os nomes dos arquivos
 def inserirNomeArquivo(lista):
     while True:
         nome_arquivo = input('Digite o nome do arquivo (junto com a extensão) que deseja baixar! [Aperte 0 para finalizar]\n')
@@ -52,7 +69,11 @@ def inserirNomeArquivo(lista):
         
         print('\n--> O arquivo ['+ nome_arquivo +'] não consta na base de dados do servidor! <--\n')    
 
-
+# Função que recebe o arquivo do servidor
+# Primeiramente ela recebe os nomes dos arquivos que estão no servidor e adiciona em um vetor
+# Se o vetor for diferente que vazio, então será exibidos os arquivos que estão no vetor e depois o Cliente digitará o nome do arquivo
+# que deseja baixar
+# Com o arquivo escolhido, ele será aberto em modo de escrita binária e receberá o conteúdo do arquivo que será escrito nele
 def receberArquivo():
     lista_arquivo = []
     while True:
@@ -82,7 +103,8 @@ def receberArquivo():
                     conteudo_arquivo += dado
                     bytes_recebidos += len(dado)
                 arquivo.write(conteudo_arquivo)
-            print('O Arquivo ['+ nome_arquivo +'] foi baixado com sucesso')
+            print('O Arquivo "'+ nome_arquivo +'" foi baixado com sucesso')
+            
     else:
         print('\n--> Não há arquivos presentes no servidor! <--\nOperação Cancelada!\n')
 
@@ -104,6 +126,8 @@ match opção:
         sockobj.send(opção.encode())
         receberArquivo()
     case '0':
-        print("Programa encerrado")
         sockobj.send(opção.encode())
         # Encerrar programa
+
+print('Encerrando conexão...')
+sockobj.close()            
