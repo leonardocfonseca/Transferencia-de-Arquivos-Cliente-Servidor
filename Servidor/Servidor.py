@@ -2,7 +2,9 @@ from socket import *
 from time import sleep
 import os
 
-
+# Função que vai enviar o arquivo para o cliente
+# Primeramente ela envia os nomes dos arquivos estão no servidor e espera receber o nome do arquivo escolhido
+# Após receber o nome, ela abre este mesmo arquivo em modo de leitura binaria e vai enviando o conteúdo do arquivo
 def enviarArquivo():
     lista_arquivos = os.listdir('Servidor\\')
     for i in range(len(lista_arquivos)-1):
@@ -25,17 +27,17 @@ def enviarArquivo():
             conexão.send(buffer)
 
         print(nome_arquivo,' foi enviado com sucesso')
+        
 
-
+# Função que recebe o nome do arquivo selecionado, abre ele em modo de escrita binaria
+# e vai escrevendo nele o conteúdo do arquivo recebido pelo cliente
 def receberArquivo():
     while True:
         nome_arquivo = conexão.recv(1024).decode()
-        # print('Recebido o nome do arquivo',nome_arquivo)
         if not nome_arquivo:
             break
 
         with open('Servidor\\' + nome_arquivo, 'wb') as arquivo:
-            # print('arquivo aberto',nome_arquivo)
             tamanho = int(conexão.recv(1024).decode())
             bytes_recebidos = 0
             conteudo_arquivo = b''
@@ -48,6 +50,7 @@ def receberArquivo():
                 bytes_recebidos += len(dado)
 
             arquivo.write(conteudo_arquivo)
+        print('Arquivo "',nome_arquivo,'" foi recebido com sucesso!')  
 
 
 
@@ -77,5 +80,7 @@ while True:
         case '2':
             enviarArquivo()
         case '0':
-            print("Fechando servidor")
-            break     
+            break
+
+print('Encerrando conexão...')
+conexão.close()
