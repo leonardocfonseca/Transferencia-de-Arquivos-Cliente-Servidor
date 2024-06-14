@@ -22,11 +22,10 @@ Bibliotecas Python: socket, os, time, tkinter
 </ul>
 
 <h3>3) Executar PRIMEIRAMENTE o Servidor.py e depois o Cliente.py:</h3>
-
-Na sua IDE, abra um terminal e execute o arquivo Servidor.py
-
-Logo após, abra um novo terminal e execute o arquivo Cliente.py
-
+<ul>
+  <li>Na sua IDE, abra um terminal e execute o arquivo Servidor.py</li>
+  <li>Logo após, abra um novo terminal e execute o arquivo Cliente.py</li>
+</ul>
 
 <h2>Autoria e Contribuições</h2>
 
