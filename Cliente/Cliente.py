@@ -11,6 +11,9 @@ def exibirMenu():
         opção = input("Opção invalida!\nSelecione apenas as opções disponíveis: ")
     return opção
 
+
+
+
 # Função que vai abrir uma janela de seleção de arquivos
 # Retorna o diretório do arquivo selecionado
 def selecionarArquivo():
@@ -27,6 +30,8 @@ def selecionarArquivo():
     
     diretorio = filedialog.askopenfilename(title="SELECIONE O ARQUIVO")
     return diretorio
+
+
 
 # Função que vai enviar o arquivo para o servidor
 # Primeiramente ela envia o nome do arquivo para o servidor
@@ -55,6 +60,7 @@ def exibirArquivos(lista_arquivo):
     print('\n')
 
 
+
 # Função que vai cuidar do input do Cliente caso ele digite o nome do arquivo errado
 # Ela recebe como parâmetro um vetor contendo os nomes dos arquivos
 def inserirNomeArquivo(lista):
@@ -69,8 +75,13 @@ def inserirNomeArquivo(lista):
         
         print('\n--> O arquivo ['+ nome_arquivo +'] não consta na base de dados do servidor! <--\n')    
 
+
+
+
+
+
 # Função que recebe o arquivo do servidor
-# Primeiramente ela recebe os nomes dos arquivos que estão no servidor e adiciona em um vetor
+# Ela recebe os nomes dos arquivos que estão no servidor e adiciona em um vetor
 # Se o vetor for diferente que vazio, então será exibidos os arquivos que estão no vetor e depois o Cliente digitará o nome do arquivo
 # que deseja baixar
 # Com o arquivo escolhido, ele será aberto em modo de escrita binária e receberá o conteúdo do arquivo que será escrito nele
@@ -91,7 +102,8 @@ def receberArquivo():
             sockobj.send(nome_arquivo.encode())
             
             ## -> RECEBIMENTO DO CONTEÚDO DO ARQUIVO <- ###
-            with open('Cliente\\' + nome_arquivo, 'wb') as arquivo:
+            caminho_arquivo = os.path.join('Cliente', nome_arquivo)
+            with open(caminho_arquivo, 'wb') as arquivo:
                 tamanho = int(sockobj.recv(1024).decode())
                 bytes_recebidos = 0
                 conteudo_arquivo = b''
@@ -130,4 +142,4 @@ match opção:
         # Encerrar programa
 
 print('Encerrando conexão...')
-sockobj.close()            
+sockobj.close() 
