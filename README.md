@@ -1,7 +1,7 @@
 # Transferencia-de-Arquivos-Cliente-Servidor 
 Este projeto é uma aplicação Cliente-Servidor desenvolvida em Python, que permite o envio e recebimento de arquivos por meio de Sockets. Os usuários podem escolher entre enviar um arquivo para o servidor ou baixar um arquivo existente no servidor. A aplicação suporta a transferência de diversos tipos de arquivos, como documentos, fotos e vídeos.
 
-<h3>Pré-Requisitos</h3>
+<h2>Pré-Requisitos</h2>
 
 Python 3.6 ou superior<br>
 Bibliotecas Python: socket, os, time, tkinter
@@ -28,7 +28,7 @@ Na sua IDE, abra um terminal e execute o arquivo Servidor.py
 Logo após, abra um novo terminal e execute o arquivo Cliente.py
 
 
-# Autoria e Contribuições
+<h2>Autoria e Contribuições</h2>
 
 Leonardo Carvalho da Fonseca<br>
 Mateus Magalhães França
