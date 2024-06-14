@@ -12,7 +12,7 @@ Bibliotecas Python: socket, os, time, tkinter
 <ul>
   <li>Acesse o repositório do projeto no GitHub.</li>
   <li>Clique no botão "Code" e selecione "Download ZIP" para baixar o repositório. Além disso, você também pode clonar o repositório usando Git com o comando:
-  git clone https://github.com/seu-usuario/seu-projeto.git</li>
+  git clone https://github.com/leonardocfonseca/Transferencia-de-Arquivos-Cliente-Servidor</li>
 </ul>
 <h3>2) Abrir a pasta do projeto com Visual Studio Code ou IDE de sua preferência:</h2>
 <ul>
