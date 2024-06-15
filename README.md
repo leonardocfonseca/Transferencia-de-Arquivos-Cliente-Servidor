@@ -11,8 +11,8 @@ Este projeto é uma aplicação Cliente-Servidor desenvolvida em Python, que per
 ### 1) Baixar o repositório do GitHub
 <ul>
   <li>Acesse o repositório do projeto no GitHub.</li>
-  <li>Clique no botão "Code" e selecione "Download ZIP" para baixar o repositório. Além disso, você também pode clonar o repositório usando Git com o comando:
-  git clone https://github.com/leonardocfonseca/Transferencia-de-Arquivos-Cliente-Servidor</li>
+  <li>Clique no botão "Code" e selecione "Download ZIP" para baixar o repositório. Além disso, você também pode clonar o repositório usando Git com o comando:</li>
+  `git clone https://github.com/leonardocfonseca/Transferencia-de-Arquivos-Cliente-Servidor`
 </ul>
 
 ### 2) Abrir a pasta do projeto com Visual Studio Code ou IDE de sua preferência:
