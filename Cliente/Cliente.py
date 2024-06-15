@@ -20,16 +20,12 @@ def selecionarArquivo():
     janela = Tk()
 
     janela.withdraw()
-    # Exibe a janela de seleção de arquivo
     janela.lift()
     janela.attributes('-topmost', True)
-    # window.grab_set()
-
-    # Permite que outras janelas passem na frente
-    # window.after_idle(window.attributes, '-topmost', False)
     
     diretorio = filedialog.askopenfilename(title="SELECIONE O ARQUIVO")
     return diretorio
+
 
 
 
@@ -51,6 +47,7 @@ def enviarArquivo():
     print('O Arquivo "' + nome_arquivo + '" foi enviado com sucesso')
 
 
+
 # Função que recebe como parametro o vetor contendo os nomes dos arquivos que estão no servidor
 # E imprime o nome do arquivo em cada linha
 def exibirArquivos(lista_arquivo):
@@ -65,7 +62,7 @@ def exibirArquivos(lista_arquivo):
 # Ela recebe como parâmetro um vetor contendo os nomes dos arquivos
 def inserirNomeArquivo(lista):
     while True:
-        nome_arquivo = input('Digite o nome do arquivo (junto com a extensão) que deseja baixar! [Aperte 0 para finalizar]\n')
+        nome_arquivo = input('Informe o arquivo que deseja baixar! [Aperte 0 para encerrar conexão]\n')
         if nome_arquivo == '0':
             print('--> Operação Finalizada <--')
             return '0'
@@ -73,8 +70,7 @@ def inserirNomeArquivo(lista):
         if nome_arquivo in lista:
             return nome_arquivo
         
-        print('\n--> O arquivo ['+ nome_arquivo +'] não consta na base de dados do servidor! <--\n')    
-
+        print('\n--> O arquivo "'+ nome_arquivo +'" não consta na base de dados do servidor! <--\n')    
 
 
 
@@ -109,16 +105,18 @@ def receberArquivo():
                 conteudo_arquivo = b''
                 
                 while bytes_recebidos < tamanho:
-                    dado = sockobj.recv(min(100000, tamanho - bytes_recebidos))
+                    dado = sockobj.recv(5000000)
                     if not dado: 
                         break
                     conteudo_arquivo += dado
                     bytes_recebidos += len(dado)
                 arquivo.write(conteudo_arquivo)
-            print('O Arquivo "'+ nome_arquivo +'" foi baixado com sucesso')
+            print('\n --> Arquivo "' + nome_arquivo + '" foi baixado com sucesso! <--\n')
             
     else:
         print('\n--> Não há arquivos presentes no servidor! <--\nOperação Cancelada!\n')
+
+
 
 
 endereço = 'localhost'
@@ -142,4 +140,4 @@ match opção:
         # Encerrar programa
 
 print('Encerrando conexão...')
-sockobj.close() 
+sockobj.close()
