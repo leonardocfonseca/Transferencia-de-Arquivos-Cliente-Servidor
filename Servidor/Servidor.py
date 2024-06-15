@@ -30,19 +30,18 @@ def enviarArquivo():
             conexão.send(tamanho.encode())
             conexão.send(buffer)
 
-        print('O arquivo "',nome_arquivo,'" foi enviado com sucesso')
+        print('O arquivo "' + nome_arquivo + '" foi enviado com sucesso')
         
 
 # Função que recebe o nome do arquivo selecionado, abre ele em modo de escrita binaria
 # e vai escrevendo nele o conteúdo do arquivo recebido pelo cliente
 def receberArquivo():
-    diretorio_servidor = os.path.abspath('Servidor')
     while True:
         nome_arquivo = conexão.recv(1024).decode()
         if not nome_arquivo:
             break
         
-        caminho_arquivo = os.path.join(diretorio_servidor, nome_arquivo)
+        caminho_arquivo = os.path.join('Servidor', nome_arquivo)
         print('Caminho arquivo ->',caminho_arquivo)
         with open(caminho_arquivo, 'wb') as arquivo:
             tamanho = int(conexão.recv(1024).decode())
@@ -57,7 +56,7 @@ def receberArquivo():
                 bytes_recebidos += len(dado)
 
             arquivo.write(conteudo_arquivo)
-        print('Arquivo "',nome_arquivo,'" foi recebido com sucesso!')  
+        print('Arquivo "' + nome_arquivo + '" foi recebido com sucesso!')  
 
 
 
