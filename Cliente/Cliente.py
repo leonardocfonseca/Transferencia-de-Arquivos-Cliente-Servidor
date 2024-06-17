@@ -34,17 +34,17 @@ def selecionarArquivo():
 # E depois ela vai enviando o conteúdo do arquivo
 def enviarArquivo():
     dirArquivo = selecionarArquivo()
-    
     nome_arquivo = os.path.basename(dirArquivo)
     sockobj.send(nome_arquivo.encode())
     sleep(0.5)
+
     with open(dirArquivo, 'rb') as arquivo:
         buffer = arquivo.read()
         tamanho = str(len(buffer))
         sockobj.send(tamanho.encode())
         sockobj.send(buffer)
 
-    print('O Arquivo "' + nome_arquivo + '" foi enviado com sucesso')
+    print('\n--> O Arquivo "' + nome_arquivo + '" foi enviado com sucesso <--\n')
 
 
 
@@ -74,30 +74,29 @@ def inserirNomeArquivo(lista):
 
 
 
-
-
-# Função que recebe o arquivo do servidor
-# Ela recebe os nomes dos arquivos que estão no servidor e adiciona em um vetor
-# Se o vetor for diferente que vazio, então será exibidos os arquivos que estão no vetor e depois o Cliente digitará o nome do arquivo
-# que deseja baixar
-# Com o arquivo escolhido, ele será aberto em modo de escrita binária e receberá o conteúdo do arquivo que será escrito nele
-def receberArquivo():
-    lista_arquivo = []
+def listarArquivos():
+    lista_arquivos = []
     while True:
         nome = sockobj.recv(1024).decode()
         if not nome or nome == '<END>':
             break
-        lista_arquivo.append(nome)
+        lista_arquivos.append(nome)
+    return lista_arquivos
 
-    if lista_arquivo != []:
-        exibirArquivos(lista_arquivo)
+
+
+def receberArquivo():
+    lista_de_arquivos = listarArquivos()
+    
+    if lista_de_arquivos:
+        exibirArquivos(lista_de_arquivos)
+
         while True:
-            nome_arquivo = inserirNomeArquivo(lista_arquivo)
-            if nome_arquivo == '0': 
+            nome_arquivo = inserirNomeArquivo(lista_de_arquivos)
+            if nome_arquivo == '0':
                 break
             sockobj.send(nome_arquivo.encode())
             
-            ## -> RECEBIMENTO DO CONTEÚDO DO ARQUIVO <- ###
             caminho_arquivo = os.path.join('Cliente', nome_arquivo)
             with open(caminho_arquivo, 'wb') as arquivo:
                 tamanho = int(sockobj.recv(1024).decode())
@@ -106,10 +105,9 @@ def receberArquivo():
                 
                 while bytes_recebidos < tamanho:
                     dado = sockobj.recv(5000000)
-                    if not dado: 
-                        break
                     conteudo_arquivo += dado
                     bytes_recebidos += len(dado)
+                    
                 arquivo.write(conteudo_arquivo)
             print('\n --> Arquivo "' + nome_arquivo + '" foi baixado com sucesso! <--\n')
             
@@ -119,12 +117,8 @@ def receberArquivo():
 
 
 
-endereço = 'localhost'
-porta = 5001
-
 sockobj = socket(AF_INET, SOCK_STREAM)
-destino = (endereço, porta)
-sockobj.connect(destino)
+sockobj.connect(('localhost',5001))
 
 opção = exibirMenu()
 
@@ -140,4 +134,4 @@ match opção:
         # Encerrar programa
 
 print('Encerrando conexão...')
-sockobj.close()
+sockobj.close()            
