@@ -18,8 +18,8 @@ Este projeto é uma aplicação Cliente-Servidor desenvolvida em Python, que per
 ### 2) Abrir a pasta do projeto com Visual Studio Code ou IDE de sua preferência:
 <ul>
   <li>Descompacte o arquivo ZIP baixado, se necessário.</li>
-  <li>Abra o Visual Studio Code (ou sua IDE preferida).</li>
-  <li>Navegue até o diretório do projeto e abra a pasta.</li>
+  <li>Abra o Visual Studio Code (ou sua IDE de preferência).</li>
+  <li>Com a IDE aberta, navegue até o diretório do projeto e abra a pasta.</li>
 </ul>
 
 ### 3) Executar PRIMEIRAMENTE o Servidor.py e depois o Cliente.py:
