@@ -38,7 +38,7 @@ def receberArquivo():
             conteudo_arquivo = b''
             
             while bytes_recebidos < tamanho:
-                dado = conexão.recv(5000000)
+                dado = conexão.recv(1000000) # Recebe até 1 MB por vez
                 conteudo_arquivo += dado
                 bytes_recebidos += len(dado)
 
@@ -56,7 +56,7 @@ print('O Servidor foi iniciado!')
 
 conexão, cliente = objSocket.accept()
 
-print(cliente[0],'acabou de se conectar')
+print(cliente,'acabou de se conectar')
 
 opção_escolhida = conexão.recv(10)
 
