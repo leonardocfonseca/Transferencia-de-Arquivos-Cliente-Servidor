@@ -30,8 +30,6 @@ def selecionarArquivo():
 
 
 
-
-
 def enviarArquivo():
     while True:
         dirArquivo = selecionarArquivo()
@@ -45,13 +43,17 @@ def enviarArquivo():
             sockobj.send(tamanho.encode())
             sockobj.send(buffer)
 
-        print('\n--> O Arquivo "' + nome_arquivo + '" foi enviado com sucesso <--\n')
+        print('\n--> Enviando o arquivo "' + nome_arquivo + '" <--\n')
         
-        resp = input('Deseja enviar mais um arquivo? [S/N]: ').upper()
-        if resp == 'N':
-            print('-> Conexão encerrada <-')
-            break
+        confirmação_recebimento = sockobj.recv(10).decode()
+        
+        if confirmação_recebimento: 
+            print('\n--> O arquivo "' + nome_arquivo + '" foi enviado com sucesso <--\n')
 
+            resp = input('Deseja enviar mais um arquivo? [S/N]: ').upper()
+            if resp == 'N':
+                print('-> Conexão encerrada <-')
+                break
 
 
 
@@ -83,7 +85,7 @@ def receberArquivo():
 
 
 sockobj = socket(AF_INET, SOCK_STREAM)
-sockobj.connect(('localhost',5001))
+sockobj.connect(('localhost', 5001))
 
 opção = exibirMenu()
 
