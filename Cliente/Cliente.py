@@ -45,9 +45,9 @@ def enviarArquivo():
 
         print('\n--> Enviando o arquivo "' + nome_arquivo + '" <--\n')
         
-        confirmação_recebimento = sockobj.recv(10).decode()
+        confirmação_envio = sockobj.recv(10).decode()
         
-        if confirmação_recebimento: 
+        if confirmação_envio: 
             print('\n--> O arquivo "' + nome_arquivo + '" foi enviado com sucesso <--\n')
 
             resp = input('Deseja enviar mais um arquivo? [S/N]: ').upper()
