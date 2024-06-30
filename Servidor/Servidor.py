@@ -19,7 +19,7 @@ def enviarArquivo():
             conexão.send(tamanho.encode())
             conexão.send(buffer)
 
-        print('O arquivo "' + nome_arquivo + '" foi enviado com sucesso')
+        print('\n--> Enviando o arquivo "' + nome_arquivo + '" <--\n')
 
 
 
@@ -43,7 +43,9 @@ def receberArquivo():
                 bytes_recebidos += len(dado)
 
             arquivo.write(conteudo_arquivo)
-        print('\n --> Arquivo "' + nome_arquivo + '" foi recebido com sucesso! <--\n')  
+        print('\n --> Arquivo "' + nome_arquivo + '" foi recebido com sucesso! <--\n')
+
+        conexão.send('true'.encode()) # Enviando confirmação de recebimento
 
 
 
@@ -56,7 +58,7 @@ print('O Servidor foi iniciado!')
 
 conexão, cliente = objSocket.accept()
 
-print(cliente,'acabou de se conectar')
+print(cliente,'se conectou ao servidor')
 
 opção_escolhida = conexão.recv(10)
 
