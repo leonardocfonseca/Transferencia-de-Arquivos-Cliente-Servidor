@@ -74,7 +74,7 @@ def receberArquivo():
             conteudo_arquivo = b''
             
             while bytes_recebidos < tamanho:
-                dado = sockobj.recv(5000000)
+                dado = sockobj.recv(1000000)
                 conteudo_arquivo += dado
                 bytes_recebidos += len(dado)
                 
